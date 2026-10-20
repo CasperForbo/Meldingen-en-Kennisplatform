@@ -1,0 +1,16 @@
+Commitsheet for git repository
+
+/Commit everything/
+git add -A
+git commit -m "message"
+git push
+
+
+/Change name and e-mail in commit/
+git config --global user.name "CasperForbo"
+git config --global user.email "Casper.Corzaan@forbo.com"
+
+
+/Check commit user
+git config --global --list
+
