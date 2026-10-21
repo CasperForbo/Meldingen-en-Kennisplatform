@@ -1,15 +1,19 @@
-/* Style for dashboard.html & add.html-------------------------- */
+/* Style for dashboard.html & add.html--------------------------- */
 
 
-/* variables -----------------------------------------------------*/
+/* variables ---------------------------------------------------- */
 :root {
+    --test: red;
+    --test2: blue;
     --background: #c0c0c0;
     --container: #ffffff;
     --text: #000000;
+    --nav_button: #d9d9d9;
+    --nav_button_hover: #949494;
 }
 /* -------------------------------------------------------------- */
 
-/* body */
+/* body --------------------------------------------------------- */
 body {
     margin: 0;
     background-color: var(--background);
@@ -17,25 +21,36 @@ body {
     width: 100vw;
 }
 
-
-/* Dashboard header */
-.header {
-    height: auto;
-    width: 1;
+h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
     color: var(--text);
-    margin: 0 auto;
-    text-align: center;
 }
 
 
-/* Dashboard container */
+/* Dashboard header --------------------------------------------- */
+.header {
+    height: 10%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text);
+    border-bottom: 2px solid var(--text);
+
+}
+
+
+/* Dashboard container ------------------------------------------ */
 .container {
 
     height: 90vh;
     width: 90vw;
 
     margin: 5vh 5vw 5vh 5vw;
-    float: top;
     position: absolute;
 
     border-radius: 100px;
@@ -45,3 +60,69 @@ body {
 
 }
 
+
+/* Navigation bar ----------------------------------------------- */
+.navigation {
+
+    height: 90%;
+    width: 10%;
+
+    float: left;
+
+    border-right: 2px solid var(--text);
+    border-radius: 100px 0px 0px 100px;
+
+}
+
+
+/* nav bar buttons ---------------------------------------------- */
+.nav_button{
+    
+    min-height: 25px;
+    max-width: 90%;
+    height: 5%;
+    width: 100%;
+
+    margin: 5% 5% 0 5%;
+
+    border: 1px solid var(--text);
+    background-color: var(--nav_button);
+    color: var(--text);
+}
+
+.nav_button:hover {
+    background-color: var(--nav_button_hover);
+    cursor: pointer;
+}
+/* -------------------------------------------------------------- */
+
+
+/* Item area ---------------------------------------------------- */
+.area {
+    border-radius: 0px 0px 100px 100px;
+
+    height: 90%;
+    width: 100%;
+
+    position: absolute;
+}
+
+.area2 {
+    border-radius: 0px 0px 100px 0px;
+
+    height: 88%;
+    width: 89%;
+
+    position: absolute;
+    margin: 1% 0 0 11%;
+}
+/* -------------------------------------------------------------- */
+
+/* meldingen buttons -------------------------------------------- */
+.submit {
+    float: bottom;
+    height: 10%;
+    background-color: var(--test);
+}
+
+/* -------------------------------------------------------------- */

@@ -13,12 +13,34 @@
     <body>
 
         <div class="container">
+
             <div class="header">
+
                 <h1>Maak een nieuwe melding aan</h1>
+
             </div>
 
-            <button class="button" onclick="window.location.href='/'">Dashboard</button>
+            <div class="navigation">
 
+                <button class="nav_button" onclick="window.location.href='/'">Dashboard</button>
+
+            </div>
+
+            <div class="area2">
+
+                <form action="/add" method="post">
+
+                    <label for="title">Probleem:</label><br>
+                    <input type="text" id="title" name="title" required>
+
+                    <label for="description">Beschrijving:</label><br>
+                    <textarea id="description" name="description" required></textarea>
+
+                    <button type="submit" class="submit">Opslaan</button>
+
+                </form>
+
+            </div>
 
         </div>
 

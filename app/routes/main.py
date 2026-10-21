@@ -10,3 +10,4 @@ def index():
 @main.get("/add")
 def add():
     return render_template("add.html")
+
