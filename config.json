@@ -1,0 +1,9 @@
+{
+  "database": {
+    "connection_string_env": "DATABASE_CONNECTION_STRING",
+    "table": "meldingen"
+  },
+  "routes": {
+    "prefix": ""
+  }
+}

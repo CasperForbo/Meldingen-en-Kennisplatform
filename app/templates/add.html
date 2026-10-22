@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <head>
         
@@ -30,11 +29,54 @@
 
                 <form action="/add" method="post">
 
-                    <label for="title">Probleem:</label><br>
-                    <input type="text" id="title" name="title" required>
+                    <label for="probleem">Probleem:</label><br>
+                    <input type="text" id="probleem" name="probleem" required>
 
-                    <label for="description">Beschrijving:</label><br>
-                    <textarea id="description" name="description" required></textarea>
+                    <label for="beschrijving">Beschrijving:</label><br>
+                    <textarea id="beschrijving" name="beschrijving" required></textarea>
+
+                    <!-- Status ------------------------------------------------------------>
+                    <dropdown>
+                        <label for="status">Status:</label>
+                            <select id="status" name="status">
+                                
+                                <option value="nieuw">Nieuw</option>
+                                <option value="in_behandeling">In Behandeling</option>
+                                <option value="opgelost">Opgelost</option>
+                                <option value="gesloten">Gesloten</option>
+
+                            </select>    
+                    </dropdown>
+
+                    <!-- Prioriteiten ------------------------------------------------------>
+                    <dropdown>
+                        <label for="priority">Prioriteit:</label>
+                            <select id="priority" name="priority">
+                                
+                                <option value="laag">Laag</option>
+                                <option value="normaal">Normaal</option>
+                                <option value="hoog">Hoog</option>
+                                <option value="kritiek">Kritiek</option>
+
+                            </select>
+                    </dropdown>
+
+                    <!-- Categorieën ------------------------------------------------------->
+                    <dropdown>
+                        <label for="category">Categorie:</label>
+                            <select id="category" name="category">
+                                
+                                <option value="Lijn1">Lijn 1</option>
+                                <option value="diepdruk">Diepdruk</option>
+                                <option value="lijn23">Lijn 2/3</option>
+                                <option value="multilijn">Multilijn</option>
+                                <option value="infinity">Infinity</option>
+
+                            </select>
+                    </dropdown>
+
+                    <label for="oplossing">Oplossing:</label><br>
+                    <textarea id="oplossing" name="oplossing"></textarea>
 
                     <button type="submit" class="submit">Opslaan</button>
 
