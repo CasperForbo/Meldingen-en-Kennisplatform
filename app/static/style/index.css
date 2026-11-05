@@ -96,7 +96,6 @@ h1 {
 }
 /* -------------------------------------------------------------- */
 
-
 /* Item area ---------------------------------------------------- */
 .area {
     border-radius: 0px 0px 100px 100px;
@@ -115,14 +114,142 @@ h1 {
 
     position: absolute;
     margin: 1% 0 0 11%;
+    display: flex;
+}
+
+.add-form {
+    display: flex;
+    width: 100%;
+}
+
+.labels {
+    height: 98%;
+    width: 10%;
+}
+
+.input {
+    height: 88%;
+    width: 88%;
+
+    margin-left: 1%;
+}
+
+.confirm {
+    height: 8%;
+    width: 88%;
+
+    position: absolute;
+    bottom: 2%;
+    right: 1%;
 }
 /* -------------------------------------------------------------- */
 
 /* meldingen buttons -------------------------------------------- */
+
+#probleem {
+    height: 3em;
+    width: 50%;
+    max-width: 60%;
+
+    font-size: 1.6rem;
+
+    position: relative;
+}
+
+#beschrijving {
+    resize: none;
+
+    height: 6.5em;
+    width: 50%;
+    max-width: 60%;
+
+    margin: 1em 0 0 0;
+
+    font-size: 1.2rem;
+}
+
+#categorie, #prioriteit, #status {
+    height: 3em;
+    width: 10em;
+
+    margin: 1em 0 0 0;
+
+    font-size: 1.2rem;
+}
+
+#oplossing {
+    resize: none;
+
+    height: 6.5em;
+    width: 50%;
+    max-width: 60%;
+
+    margin: 1em 0 0 0;
+
+    font-size: 1.2rem;
+}
+
 .submit {
-    float: bottom;
-    height: 10%;
-    background-color: var(--test);
+    height: 100%;
+    width: 10%;
+
+    font-size: 1.2rem;
+}
+
+label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text);
+
+    float: right;
+}
+
+label[for="probleem"] {
+    margin-top: 1em;
+}
+
+label[for="beschrijving"] {
+    margin-top: 4em;
+}
+
+label[for="categorie"] {
+    margin-top: 4em;
+}
+
+label[for="status"] {
+    margin-top: 2em;
+}
+
+label[for="prioriteit"] {
+    margin-top: 2em;
+}
+
+label[for="oplossing"] {
+    margin-top: 3.7em;
 }
 
 /* -------------------------------------------------------------- */
+
+/* bestaande meldingen ------------------------------------------ */
+
+.meldingen-list {
+    width: 100%;
+    overflow: auto;
+}
+
+.meldingen-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.meldingen-table th,
+.meldingen-table td {
+    padding: 0.6rem;
+    border: 1px solid var(--text);
+    text-align: left;
+    vertical-align: top;
+}
+
+.meldingen-table th {
+    background-color: var(--nav_button);
+}

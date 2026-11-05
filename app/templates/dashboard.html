@@ -19,7 +19,13 @@
 
 
             <div class="area">
-                <button class="button" onclick="window.location.href='/add'">Add New Item</button>
+                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.add') }}">Add New Item</button>
+                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.lijn1') }}">Lijn 1</button>
+                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.diepdruk') }}">Diepdruk</button>
+                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.lijn23') }}">Lijn 2/3</button>
+                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.multilijn') }}">Multilijn</button>
+                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.infinity') }}">Infinity</button>
+                
             </div>
 
         </div>

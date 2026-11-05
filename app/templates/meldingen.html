@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Meldingen - {{ category_label }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style/index.css') }}">
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="header">
+
+                <h1>{{ category_label }}</h1>
+
+            </div>
+
+            <div class="navigation">
+
+                <button class="nav_button" onclick="window.location.href='/'">Dashboard</button>
+
+            </div>
+
+            <div class="area2">
+                <div class="meldingen-list">
+                    {% if meldingen %}
+                        <table class="meldingen-table">
+                            <thead>
+                                <tr>
+                                    <th>Probleem</th>
+                                    <th>Beschrijving</th>
+                                    <th>Categorie</th>
+                                    <th>Status</th>
+                                    <th>Prioriteit</th>
+                                    <th>Oplossing</th>
+                                    <th>Datum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for melding in meldingen %}
+                                    <tr>
+                                        <td>{{ melding.probleem }}</td>
+                                        <td>{{ melding.beschrijving }}</td>
+                                        <td>{{ melding.categorie }}</td>
+                                        <td>{{ melding.status }}</td>
+                                        <td>{{ melding.prioriteit }}</td>
+                                        <td>{{ melding.oplossing }}</td>
+                                        <td>{{ melding.datum.strftime('%d-%m-%Y %H:%M') if melding.datum else '' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Er zijn nog geen meldingen voor {{ category_label }}.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>

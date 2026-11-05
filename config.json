@@ -1,7 +1,8 @@
 {
   "database": {
     "connection_string_env": "DATABASE_CONNECTION_STRING",
-    "table": "meldingen"
+    "connection_string": "DRIVER={SQL SERVER};SERVER=xfsnl02sql2590;DATABASE=TestCasper;Trust_Connection=yes;",
+    "table": "dbo.meldingen"
   },
   "routes": {
     "prefix": ""

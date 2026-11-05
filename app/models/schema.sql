@@ -1,0 +1,13 @@
+IF OBJECT_ID(N'dbo.meldingen', N'U') IS NULL
+BEGIN
+	CREATE TABLE dbo.meldingen (
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		probleem NVARCHAR(255) NOT NULL,
+		beschrijving NVARCHAR(MAX) NOT NULL,
+		categorie NVARCHAR(100) NOT NULL,
+		status NVARCHAR(50) NOT NULL,
+		prioriteit NVARCHAR(50) NOT NULL,
+		oplossing NVARCHAR(MAX) NOT NULL,
+		datum DATETIME2 NOT NULL
+	);
+END;
