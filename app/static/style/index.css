@@ -10,6 +10,9 @@
     --text: #000000;
     --nav_button: #d9d9d9;
     --nav_button_hover: #949494;
+    --melding_link: rgb(52, 52, 252);
+    --scroll_1: #eeeeee;
+    --scroll_2: #888888;
 }
 /* -------------------------------------------------------------- */
 
@@ -54,6 +57,21 @@ h1 {
     position: absolute;
 
     border-radius: 100px;
+    box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.5);
+
+    background-color: var(--container);
+
+}
+
+.container2 {
+
+    height: 90vh;
+    width: 90vw;
+
+    margin: 5vh 5vw 5vh 5vw;
+    position: absolute;
+
+    border-radius: 100px 100px 0px 100px;
     box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.5);
 
     background-color: var(--container);
@@ -115,6 +133,39 @@ h1 {
     position: absolute;
     margin: 1% 0 0 11%;
     display: flex;
+    
+}
+
+.area3 {
+
+    height: calc(90% - 2px);
+    width: 89%;
+
+    position: absolute;
+    margin: 0 0 0 11%;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+.area3::-webkit-scrollbar {
+    width: 10px;
+}
+
+.area3::-webkit-scrollbar-track {
+    background: var(--scroll_1);
+    border-radius: 8px;
+}
+
+.area3::-webkit-scrollbar-thumb {
+    background: var(--scroll_2);
+    border: 2px solid var(--scroll_1);
+    border-radius: 8px;
+}
+
+.area3::-webkit-scrollbar-thumb:hover {
+    background: var(--melding_link);
 }
 
 .add-form {
@@ -232,24 +283,78 @@ label[for="oplossing"] {
 
 /* bestaande meldingen ------------------------------------------ */
 
-.meldingen-list {
-    width: 100%;
-    overflow: auto;
+.meldingen-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
-.meldingen-table {
-    width: 100%;
-    border-collapse: collapse;
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
-.meldingen-table th,
-.meldingen-table td {
-    padding: 0.6rem;
-    border: 1px solid var(--text);
+.filter-field-search {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.meldingen-filter input,
+.meldingen-filter select,
+.meldingen-filter button {
+    box-sizing: border-box;
+    min-height: 2.25rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.meldingen-filter button,
+.meldingen-filter a {
+    color: var(--text);
+    font: inherit;
+}
+
+
+.melding {
+    display: flex;
+    gap: 1rem;
+    width: 98%;
     text-align: left;
     vertical-align: top;
+    padding: 0.6rem;
+    border: 1px solid var(--text);
+    margin-bottom: 0.5rem;
+    color: inherit;
+    text-decoration: none;
 }
 
-.meldingen-table th {
+.melding:hover {
     background-color: var(--nav_button);
+}
+
+.melding-box-1 {
+    width: 60%;
+    height: auto;
+}
+
+.melding-box-2 {
+    width: 40%;
+}
+
+.melding-probleem {
+    color: var(--melding_link);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.delete-button {
+    height: 100%;
+    margin-left: 0.5rem;
+    padding: 0 1rem;
+    font-size: 1.2rem;
 }

@@ -3,55 +3,92 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Meldingen - {{ category_label }}</title>
+        <title>Alle meldingen</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style/index.css') }}">
     </head>
     <body>
 
-        <div class="container">
+        <div class="container2">
             <div class="header">
 
-                <h1>{{ category_label }}</h1>
+                <h1>Alle meldingen</h1>
 
             </div>
 
             <div class="navigation">
 
                 <button class="nav_button" onclick="window.location.href='/'">Dashboard</button>
+                <button class="nav_button" onclick="window.location.href='/add'">Nieuwe Melding</button>
 
             </div>
 
-            <div class="area2">
+            
+            <div class="area3">
                 <div class="meldingen-list">
+
+                    <!-- Search filter ------------------------------------------------->
+                    <form class="meldingen-filter" method="get" action="{{ url_for('main.meldingen') }}">
+                        <label class="filter-field-search" for="filter-search">
+                            Zoeken
+                            <input id="filter-search" name="q" type="search" value="{{ filters.search }}" placeholder="Probleem, beschrijving of oplossing">
+                        </label>
+                        <label class="filter-field" for="filter-categorie">
+                            Categorie
+                            <select id="filter-categorie" name="categorie">
+                                <option value="">Alle categorieen</option>
+                                <option value="Lijn1" {% if filters.categorie == 'Lijn1' %}selected{% endif %}>Lijn 1</option>
+                                <option value="diepdruk" {% if filters.categorie == 'diepdruk' %}selected{% endif %}>Diepdruk</option>
+                                <option value="lijn23" {% if filters.categorie == 'lijn23' %}selected{% endif %}>Lijn 2/3</option>
+                                <option value="multilijn" {% if filters.categorie == 'multilijn' %}selected{% endif %}>Multilijn</option>
+                                <option value="infinity" {% if filters.categorie == 'infinity' %}selected{% endif %}>Infinity</option>
+                            </select>
+                        </label>
+                        <label class="filter-field" for="filter-status">
+                            Status
+                            <select id="filter-status" name="status">
+                                <option value="">Alle statussen</option>
+                                <option value="nieuw" {% if filters.status == 'nieuw' %}selected{% endif %}>Nieuw</option>
+                                <option value="in_behandeling" {% if filters.status == 'in_behandeling' %}selected{% endif %}>In behandeling</option>
+                                <option value="opgelost" {% if filters.status == 'opgelost' %}selected{% endif %}>Opgelost</option>
+                                <option value="gesloten" {% if filters.status == 'gesloten' %}selected{% endif %}>Gesloten</option>
+                            </select>
+                        </label>
+                        <label class="filter-field" for="filter-prioriteit">
+                            Prioriteit
+                            <select id="filter-prioriteit" name="prioriteit">
+                                <option value="">Alle prioriteiten</option>
+                                <option value="laag" {% if filters.prioriteit == 'laag' %}selected{% endif %}>Laag</option>
+                                <option value="normaal" {% if filters.prioriteit == 'normaal' %}selected{% endif %}>Normaal</option>
+                                <option value="hoog" {% if filters.prioriteit == 'hoog' %}selected{% endif %}>Hoog</option>
+                                <option value="kritiek" {% if filters.prioriteit == 'kritiek' %}selected{% endif %}>Kritiek</option>
+                            </select>
+                        </label>
+                        <button type="submit">Filter</button>
+                        <a href="{{ url_for('main.meldingen') }}">Wis filters</a>
+                    </form>
+                    <!------------------------------------------------------------------------>
+                    
+                    <!-- Meldingen tabel ----------------------------------------------------->
                     {% if meldingen %}
-                        <table class="meldingen-table">
-                            <thead>
-                                <tr>
-                                    <th>Probleem</th>
-                                    <th>Beschrijving</th>
-                                    <th>Categorie</th>
-                                    <th>Status</th>
-                                    <th>Prioriteit</th>
-                                    <th>Oplossing</th>
-                                    <th>Datum</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for melding in meldingen %}
-                                    <tr>
-                                        <td>{{ melding.probleem }}</td>
-                                        <td>{{ melding.beschrijving }}</td>
-                                        <td>{{ melding.categorie }}</td>
-                                        <td>{{ melding.status }}</td>
-                                        <td>{{ melding.prioriteit }}</td>
-                                        <td>{{ melding.oplossing }}</td>
-                                        <td>{{ melding.datum.strftime('%d-%m-%Y %H:%M') if melding.datum else '' }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <div class="meldingen-table">
+                            {% for melding in meldingen %}
+                                <a class="melding" href="{{ url_for('main.melding_detail', melding_id=melding.id) }}">
+                                    <div class="melding-box-1">
+                                        <div class="melding-probleem">{{ melding.probleem }}</div>
+                                        <div class="melding-beschrijving">{{ melding.beschrijving }}</div>
+                                    </div>
+                                    <div class="melding-box-2">
+                                        <div class="melding-categorie">{{ melding.categorie }}</div>
+                                        <div class="melding-status">{{ melding.status }}</div>
+                                        <div class="melding-prioriteit">{{ melding.prioriteit }}</div>
+                                        <div class="melding-oplossing">{{ 'True' if melding.oplossing else 'False' }}</div>
+                                        <div class="melding-datum">{{ melding.datum.strftime('%d-%m-%Y') if melding.datum else '' }}</div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
                     {% else %}
-                        <p>Er zijn nog geen meldingen voor {{ category_label }}.</p>
+                        <p>Geen meldingen gevonden.</p>
                     {% endif %}
                 </div>
             </div>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Melding aanpassen</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style/index.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Melding aanpassen</h1>
+            </div>
+
+            <div class="navigation">
+                <button class="nav_button" onclick="window.location.href='/'">Dashboard</button>
+                <button class="nav_button" onclick="window.location.href='/meldingen'">Alle meldingen</button>
+            </div>
+
+            <div class="area2">
+                <form class="add-form" action="{{ url_for('main.melding_detail', melding_id=melding.id) }}" method="post">
+                    <div class="labels">
+                        <label for="probleem">Probleem:</label><br>
+                        <label for="beschrijving">Beschrijving:</label><br>
+                        <label for="categorie">Categorie:</label><br>
+                        <label for="status">Status:</label><br>
+                        <label for="prioriteit">Prioriteit:</label><br>
+                        <label for="oplossing">Oplossing:</label><br>
+                    </div>
+                    <div class="input">
+                        <input type="text" id="probleem" name="probleem" value="{{ melding.probleem }}" required><br>
+                        <textarea id="beschrijving" name="beschrijving" required>{{ melding.beschrijving }}</textarea><br>
+
+                        <select id="categorie" name="categorie">
+                            <option value="Lijn 1" {% if melding.categorie == 'Lijn 1' %}selected{% endif %}>Lijn 1</option>
+                            <option value="Diepdruk" {% if melding.categorie == 'Diepdruk' %}selected{% endif %}>Diepdruk</option>
+                            <option value="Lijn 2/3" {% if melding.categorie == 'Lijn 2/3' %}selected{% endif %}>Lijn 2/3</option>
+                            <option value="Multilijn" {% if melding.categorie == 'Multilijn' %}selected{% endif %}>Multilijn</option>
+                            <option value="Infinity" {% if melding.categorie == 'Infinity' %}selected{% endif %}>Infinity</option>
+                        </select><br>
+
+                        <select id="prioriteit" name="prioriteit">
+                            <option value="Laag" {% if melding.prioriteit == 'Laag' %}selected{% endif %}>Laag</option>
+                            <option value="Normaal" {% if melding.prioriteit == 'Normaal' %}selected{% endif %}>Normaal</option>
+                            <option value="Hoog" {% if melding.prioriteit == 'Hoog' %}selected{% endif %}>Hoog</option>
+                            <option value="Kritiek" {% if melding.prioriteit == 'Kritiek' %}selected{% endif %}>Kritiek</option>
+                        </select><br>
+
+                        <select id="status" name="status">
+                            <option value="Nieuw" {% if melding.status == 'Nieuw' %}selected{% endif %}>Nieuw</option>
+                            <option value="In Behandeling" {% if melding.status == 'In Behandeling' %}selected{% endif %}>In Behandeling</option>
+                            <option value="Opgelost" {% if melding.status == 'Opgelost' %}selected{% endif %}>Opgelost</option>
+                            <option value="Gesloten" {% if melding.status == 'Gesloten' %}selected{% endif %}>Gesloten</option>
+                        </select><br>
+
+                        <textarea id="oplossing" name="oplossing" placeholder="Indien geen oplossing laat dit veld leeg.">{{ melding.oplossing }}</textarea><br>
+                    </div>
+
+                    <div class="confirm">
+                        <button type="submit" class="submit">Opslaan</button>
+                        <button type="submit" class="delete-button" formaction="{{ url_for('main.melding_delete', melding_id=melding.id) }}" formnovalidate onclick="return confirm('Weet je zeker dat je deze melding wilt verwijderen?')">Verwijderen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

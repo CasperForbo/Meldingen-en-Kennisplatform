@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, abort, redirect, render_template, request, url_for
 
 if __package__ and "." in __package__:
-    from ..models.database import get_meldingen_by_categorie, save_melding
+    from ..models.database import delete_melding, get_melding, get_meldingen, save_melding, update_melding
 else:
-    from models.database import get_meldingen_by_categorie, save_melding
+    from models.database import delete_melding, get_melding, get_meldingen, save_melding, update_melding
 
 main = Blueprint("main", __name__)
 
@@ -18,38 +18,43 @@ def index():
 def add():
     return render_template("add.html")
 
-@main.get("/lijn1")
-def lijn1():
-    return render_category("Lijn1", "Lijn 1")
+@main.get("/meldingen")
+def meldingen():
+    filters = {
+        "categorie": request.args.get("categorie", "").strip(),
+        "status": request.args.get("status", "").strip(),
+        "prioriteit": request.args.get("prioriteit", "").strip(),
+        "search": request.args.get("q", "").strip(),
+    }
+    meldingen = get_meldingen(**filters)
+    return render_template("meldingen.html", meldingen=meldingen, filters=filters)
 
 
-@main.get("/diepdruk")
-def diepdruk():
-    return render_category("diepdruk", "Diepdruk")
+@main.route("/meldingen/<int:melding_id>", methods=["GET", "POST"])
+def melding_detail(melding_id):
+    melding = get_melding(melding_id)
+    if melding is None:
+        abort(404)
+
+    if request.method == "POST":
+        update_melding(
+            melding_id=melding_id,
+            probleem=request.form.get("probleem", "").strip(),
+            beschrijving=request.form.get("beschrijving", "").strip(),
+            categorie=request.form.get("categorie", "Lijn 1"),
+            status=request.form.get("status", "Nieuw"),
+            prioriteit=request.form.get("prioriteit", "Laag"),
+            oplossing=request.form.get("oplossing", "").strip(),
+        )
+        return redirect(url_for("main.meldingen"))
+
+    return render_template("melding_detail.html", melding=melding)
 
 
-@main.get("/lijn23")
-def lijn23():
-    return render_category("lijn23", "Lijn 2/3")
-
-
-@main.get("/multilijn")
-def multilijn():
-    return render_category("multilijn", "Multilijn")
-
-
-@main.get("/infinity")
-def infinity():
-    return render_category("infinity", "Infinity")
-
-
-def render_category(category, category_label):
-    meldingen = get_meldingen_by_categorie(category)
-    return render_template(
-        "meldingen.html",
-        meldingen=meldingen,
-        category_label=category_label
-    )
+@main.post("/meldingen/<int:melding_id>/delete")
+def melding_delete(melding_id):
+    delete_melding(melding_id)
+    return redirect(url_for("main.meldingen"))
 
 
 @main.post("/add")
@@ -63,5 +68,5 @@ def add_melding():
         oplossing=request.form.get("oplossing", "oplossing").strip(),
         datum=datetime.now()
     )
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.meldingen"))
 
