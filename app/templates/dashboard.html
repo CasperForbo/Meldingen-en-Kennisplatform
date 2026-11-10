@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
     <head>
         
         <meta charset="UTF-8">
@@ -11,19 +11,62 @@
 
     <body>
 
-        <div class="container">
+        <div class="container dashboard-container">
             <div class="header">
                 <h1>Dashboard</h1>
             </div>
 
-
-
-            <div class="area">
-                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.add') }}">Add New Item</button>
-                <button class="button" onclick="window.location.href=this.dataset.url" data-url="{{ url_for('main.meldingen') }}">Alle meldingen</button>
-                
+            <div class="navigation">
+                <button class="nav_button" onclick="window.location.href='/add'">Nieuwe melding</button>
+                <button class="nav_button" onclick="window.location.href='/meldingen'">Alle meldingen</button>
             </div>
 
+            <div class="area2 dashboard-content">
+                <section class="dashboard-status" aria-label="Meldingen per status">
+                    <div class="dashboard-stat dashboard-stat-open">
+                        <span class="dashboard-stat-label">Open meldingen</span>
+                        <strong>{{ open_count }}</strong>
+                    </div>
+                    <div class="dashboard-stat dashboard-stat-closed">
+                        <span class="dashboard-stat-label">Gesloten meldingen</span>
+                        <strong>{{ closed_count }}</strong>
+                    </div>
+                </section>
+
+                <div class="dashboard-details">
+                    <section class="dashboard-section">
+                        <h2>Meldingen per categorie</h2>
+                        {% if categorie_counts %}
+                            <ul class="category-list">
+                                {% for categorie, aantal in categorie_counts %}
+                                    <li><span>{{ categorie }}</span><strong>{{ aantal }}</strong></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="dashboard-empty">Nog geen meldingen.</p>
+                        {% endif %}
+                    </section>
+
+                    <section class="dashboard-section">
+                        <h2>3 meest recente meldingen</h2>
+                        {% if recente_meldingen %}
+                            <div class="recent-list">
+                                {% for melding in recente_meldingen %}
+                                    <a class="recent-melding" href="{{ url_for('main.melding_detail', melding_id=melding.id) }}">
+                                        <span class="recent-melding-main">
+                                            <strong>{{ melding.probleem }}</strong>
+                                            <span>{{ melding.categorie }} | {{ melding.status }}</span>
+                                        </span>
+                                        <time datetime="{{ melding.datum.isoformat() if melding.datum else '' }}">{{ melding.datum.strftime('%d-%m-%Y') if melding.datum else '' }}</time>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="dashboard-empty">Nog geen meldingen.</p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
         </div>
 
     </body>

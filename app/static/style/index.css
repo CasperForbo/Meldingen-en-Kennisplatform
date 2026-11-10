@@ -13,6 +13,7 @@
     --melding_link: rgb(52, 52, 252);
     --scroll_1: #eeeeee;
     --scroll_2: #888888;
+    --opslaan: #006CB7;
 }
 /* -------------------------------------------------------------- */
 
@@ -245,6 +246,7 @@ h1 {
     width: 10%;
 
     font-size: 1.2rem;
+    background-color: var(--opslaan);
 }
 
 label {
@@ -357,4 +359,109 @@ label[for="oplossing"] {
     margin-left: 0.5rem;
     padding: 0 1rem;
     font-size: 1.2rem;
+}
+/* -------------------------------------------------------------- */
+
+
+/* Dashboard ---------------------------------------------------- */
+.dashboard-content {
+    box-sizing: border-box;
+    top: 12%;
+    left: 11%;
+
+    height: 90%;
+    width: 81%;
+    margin: 0;
+
+    display: block;
+    overflow-y: auto;
+    border-radius: 0;
+}
+
+.dashboard-status {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+    border-left: 5px solid var(--scroll_2);
+    background: var(--scroll_1);
+}
+
+.dashboard-stat-open {
+    border-left-color: #b7791f;
+}
+
+.dashboard-stat-closed {
+    border-left-color: #2f855a;
+}
+
+.dashboard-stat-label {
+    font-size: 1rem;
+}
+
+.dashboard-stat strong {
+    font-size: 2rem;
+}
+
+.dashboard-details {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 2rem;
+}
+
+.dashboard-section h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+}
+
+.category-list,
+.recent-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.category-list li,
+.recent-melding {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--nav_button);
+}
+
+.recent-melding {
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.recent-melding:hover {
+    background: var(--scroll_1);
+}
+
+.recent-melding-main {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.recent-melding-main strong {
+    overflow-wrap: anywhere;
+}
+
+.recent-melding time {
+    flex-shrink: 0;
+}
+
+.dashboard-empty {
+    color: #555;
 }

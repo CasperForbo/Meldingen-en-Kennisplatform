@@ -1,3 +1,4 @@
+from collections import Counter
 from datetime import datetime
 
 from flask import Blueprint, abort, redirect, render_template, request, url_for
@@ -12,7 +13,20 @@ main = Blueprint("main", __name__)
 
 @main.get("/")
 def index():
-    return render_template("dashboard.html")
+    meldingen = get_meldingen()
+    gesloten_statussen = {"opgelost", "gesloten"}
+    open_count = sum(
+        melding["status"].strip().lower() not in gesloten_statussen
+        for melding in meldingen
+    )
+    categorie_counts = Counter(melding["categorie"] for melding in meldingen)
+    return render_template(
+        "dashboard.html",
+        open_count=open_count,
+        closed_count=len(meldingen) - open_count,
+        categorie_counts=sorted(categorie_counts.items()),
+        recente_meldingen=meldingen[:3],
+    )
 
 @main.get("/add")
 def add():

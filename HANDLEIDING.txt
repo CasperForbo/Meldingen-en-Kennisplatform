@@ -1,0 +1,145 @@
+HANDLEIDING - MELDINGEN- EN KENNISPLATFORM
+==========================================
+
+1. DOEL VAN DE APPLICATIE
+-------------------------
+Dit project is een webapplicatie voor het registreren en terugvinden van
+problemen en oplossingen. Gebruikers kunnen meldingen aanmaken, bekijken,
+zoeken, filteren, aanpassen en verwijderen. De gegevens worden opgeslagen in
+Microsoft SQL Server.
+
+2. BENODIGDHEDEN
+----------------
+- Python 3
+- De Python-pakketten uit requirements.txt (Flask en pyodbc)
+- Microsoft SQL Server met een bereikbare database
+- Een passende Microsoft SQL Server ODBC-driver voor pyodbc
+
+3. INSTALLEREN EN STARTEN
+-------------------------
+Voer de volgende opdrachten uit in PowerShell, vanuit de hoofdmap van het
+project:
+
+    python -m venv .venv
+    .venv\Scripts\Activate.ps1
+    python -m pip install -r requirements.txt
+
+Stel de databaseverbinding in zoals beschreven in hoofdstuk 4. Start daarna
+de ontwikkelserver met:
+
+    python -m flask --app app run --debug
+
+Open vervolgens http://127.0.0.1:5000 in een browser. Stop de server met
+Ctrl+C in de terminal. De Flask-debugmodus is bedoeld voor lokale ontwikkeling,
+niet voor een productieomgeving.
+
+4. DATABASE INSTELLEN
+---------------------
+De database-instellingen staan in config.json. De applicatie verwacht een tabel
+met de naam dbo.meldingen. Het SQL-script om die tabel aan te maken staat in
+app/models/schema.sql. Voer dit script uit in de bedoelde SQL Server-database
+voordat je de applicatie gebruikt.
+
+De configuratie verwijst naar de omgevingsvariabele
+DATABASE_CONNECTION_STRING. Als deze variabele is ingesteld, gebruikt de
+applicatie die waarde; anders gebruikt zij de connection_string uit config.json.
+Configureer de verbindingswaarde passend bij jouw server, database,
+authenticatiemethode en geïnstalleerde ODBC-driver. Deel een connection string
+met wachtwoorden niet in broncode of in versiebeheer.
+
+De tabel bevat deze velden:
+- id: automatisch gegenereerd uniek nummer
+- probleem: korte titel, maximaal 255 tekens
+- beschrijving: uitgebreide probleembeschrijving
+- categorie: afdeling of productielijn
+- status: voortgang van de melding
+- prioriteit: urgentie
+- oplossing: vastgelegde oplossing; de databasekolom is verplicht
+- datum: datum en tijd waarop de melding is aangemaakt
+
+5. DE APPLICATIE GEBRUIKEN
+--------------------------
+Dashboard (/)
+Toont het aantal open en gesloten meldingen, de aantallen per categorie en
+de drie meest recente meldingen. Een melding telt als gesloten wanneer de
+status opgelost of gesloten is (hoofdletterongevoelig). Alle andere statussen
+tellen als open.
+
+Nieuwe melding (/add)
+Vul probleem en beschrijving in. Kies een categorie, status en prioriteit.
+Vul de oplossing in als die al bekend is; het formulier geeft aan dat dit veld
+leeg mag blijven. Klik op Opslaan om de melding in de database te bewaren.
+Na opslaan ga je naar het overzicht.
+
+Alle meldingen (/meldingen)
+Toont meldingen met de nieuwste datum bovenaan. Gebruik het zoekveld om te
+zoeken in probleem, beschrijving en oplossing. Categorie, status en prioriteit
+kunnen ook als filters worden gekozen. Wis filters brengt je terug naar het
+volledige overzicht. Klik op een melding om de details te openen.
+
+Melding aanpassen (/meldingen/<id>)
+Pas de velden aan en klik op Opslaan. Met Verwijderen wordt de melding definitief
+uit de database verwijderd; bevestig de browsermelding om door te gaan. Een
+melding met een onbekend ID geeft een 404-pagina.
+
+Beschikbare formulierkeuzes:
+- Categorie: Lijn 1, Diepdruk, Lijn 2/3, Multilijn, Infinity
+- Status: Nieuw, In Behandeling, Opgelost, Gesloten
+- Prioriteit: Laag, Normaal, Hoog, Kritiek
+
+6. BELANGRIJKE BEKENDE BEPERKING
+--------------------------------
+De filterkeuzes in app/templates/meldingen.html gebruiken andere waarden dan
+de formulieren voor nieuwe en aangepaste meldingen. De databasefilters
+vergelijken waarden exact. Hierdoor kunnen categorie-, status- en
+prioriteitsfilters meldingen missen die via het formulier zijn opgeslagen.
+Bijvoorbeeld: een melding kan de categorie "Lijn 1" hebben terwijl het filter
+"Lijn1" verstuurt. Zoeken op tekst is hiervan niet afhankelijk.
+
+7. OPBOUW VAN DE BRONCODE
+-------------------------
+- app/__init__.py: maakt de Flask-applicatie aan, laadt config.json en
+  registreert de routes.
+- app/routes/main.py: verwerkt de webpagina's en acties voor dashboard,
+  meldingen, toevoegen, aanpassen en verwijderen.
+- app/models/database.py: voert SQL Server-query's uit voor lezen, opslaan,
+  aanpassen, verwijderen, zoeken en filteren.
+- app/models/schema.sql: maakt de meldingen-tabel aan als die nog niet bestaat.
+- app/templates/dashboard.html: dashboardpagina.
+- app/templates/add.html: formulier voor een nieuwe melding.
+- app/templates/meldingen.html: zoek- en filterpagina met het meldingenoverzicht.
+- app/templates/melding_detail.html: formulier om een melding aan te passen of
+  te verwijderen.
+- app/static/style/index.css: opmaak van de webpagina's.
+- app/static/javascript/script.js: gereserveerd voor browsercode; dit bestand
+  is momenteel leeg.
+- config.json: database- en routeconfiguratie.
+- requirements.txt: Python-afhankelijkheden.
+
+8. ROUTES IN HET KORT
+---------------------
+- GET /: dashboard
+- GET /add: formulier voor een nieuwe melding
+- POST /add: slaat een nieuwe melding op
+- GET /meldingen: overzicht, zoeken en filteren
+- GET /meldingen/<id>: details en bewerkformulier
+- POST /meldingen/<id>: slaat wijzigingen op
+- POST /meldingen/<id>/delete: verwijdert de melding
+
+Het routevoorvoegsel wordt ingesteld met routes.prefix in config.json. In de
+standaardconfiguratie is dit leeg.
+
+9. PROBLEMEN OPLOSSEN
+---------------------
+- Kan Flask niet importeren: activeer de virtuele omgeving en installeer
+  requirements.txt opnieuw.
+- Kan pyodbc niet importeren of geen ODBC-driver vinden: controleer de
+  pyodbc-installatie en installeer een compatibele SQL Server ODBC-driver.
+- Kan geen verbinding maken met SQL Server: controleer de waarde van
+  DATABASE_CONNECTION_STRING, netwerktoegang, server- en databasenaam en de
+  ingestelde authenticatie.
+- Tabel of databaseobject niet gevonden: voer app/models/schema.sql uit op de
+  database die in de verbinding is geselecteerd en controleer de tabelnaam in
+  config.json.
+- De applicatie toont een serverfout: bekijk de foutmelding in de terminal
+  waarin Flask draait. Controleer eerst de databaseverbinding en tabel.
